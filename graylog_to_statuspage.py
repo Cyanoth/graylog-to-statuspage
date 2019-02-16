@@ -1,9 +1,10 @@
 import argparse
-import json
 import logging
 import os
 import time
+import traceback
 import requests
+import yaml
 
 LOGGING_FORMAT='%(asctime)s %(levelname)-8s %(message)s'
 LOGGING_DATETIME_FORMAT='%Y-%m-%d %H:%M:%S'
@@ -20,14 +21,15 @@ def main(config_file_path):
     logging.info("------------------------------")
 
     try:
-        with open(config_file_path, 'r') as f:  # Load configuration
-            config = json.load(f)
-            statuspage_api_host = config["statuspageAPIHost"]
-            graylog_api_host = config["graylogAPIHost"]
-            statuspage_api_key = config["statuspageAPIKey"]
-            graylog_api_token = config["graylogAPIToken"]
-            update_delay = config["updateDelay"]
-            metrics = config["metrics"]
+        with open(config_file_path, 'r') as stream:
+            config = yaml.load(stream)
+
+        statuspage_api_host = config["statuspageAPIHost"]
+        graylog_api_host = config["graylogAPIHost"]
+        statuspage_api_key = config["statuspageAPIKey"]
+        graylog_api_token = config["graylogAPIToken"]
+        update_delay = config["updateDelay"]
+        metrics = config["metrics"]
 
         if update_delay < 1000:  # Maximum update frequency of StatusPage API is 1 second
             update_delay = 1000
@@ -59,7 +61,7 @@ def main(config_file_path):
             time.sleep(update_delay / 1000.0)
 
     except Exception as err:
-        logging.error("Unhandled Exception Occurred. Error: {}".format(err))
+        logging.error("Unhandled Exception Occurred. Error: {}".format(traceback.print_exc()))
     finally:
         logging.info("*** Graylog Metrics To StatusPage Metrics stopping ***")
 
@@ -106,7 +108,7 @@ def send_statuspage_metric_value(sp_apihost, sp_apikey, sp_pageid, sp_metricid, 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='')
-    parser.add_argument('-c', '--config', help="Configuration file that includes API & metrics to monitor", type=str,default="graylog_to_statuspage_conf.json")
+    parser.add_argument('-c', '--config', help="Configuration file that includes API & metrics to monitor", type=str,default="graylog_to_statuspage_config.yaml")
     parser.add_argument('-d', '--dryrun', help="Dry-run mode. The value won't actually be sent to StatusPage.", action='store_true')
     parser.add_argument('-l', '--logfile', help="Specify the log-file to store logging information.", default='graylog_to_statuspage.log')
     parser.add_argument('-p', '--pidfile', help="Specify PID lock file for multiple instances.", default='/tmp/graylog_to_statuspage')

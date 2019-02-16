@@ -1,0 +1,26 @@
+---
+updateDelay: 5000
+statuspageAPIHost: "https://api.statuspage.io"
+statuspageAPIKey: ""
+graylogAPIHost: ""
+graylogAPIToken: ""
+
+metrics:
+  - description: ""      
+    graylogDashboardID: ""
+    graylogWidgetID: ""
+    statuspageID: ""
+    statuspageMetricID: ""
+
+  - description: ""      
+    graylogDashboardID: ""
+    graylogWidgetID: ""
+    statuspageID: ""
+    statuspageMetricID: ""
+
+  - description: ""      
+    graylogDashboardID: ""
+    graylogWidgetID: ""
+    statuspageID: ""
+    statuspageMetricID: ""
+
