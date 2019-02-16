@@ -2,7 +2,6 @@ import argparse
 import json
 import logging
 import os
-import sys
 import time
 import requests
 
@@ -122,7 +121,7 @@ if __name__ == "__main__":
 
     if os.path.isfile(args.pidfile):
         print("FATAL: Failed to start Graylog to StatusPage script. Another instance is already running!")
-        sys.exit(1)
+        exit(1)
 
     with open(args.pidfile, 'w') as file:
         file.write(pid)
