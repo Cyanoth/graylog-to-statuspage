@@ -33,7 +33,7 @@ def main(config_file_path):
 
         if update_delay < 1000:  # Maximum update frequency of StatusPage API is 1 second
             update_delay = 1000
-            logging.warn("Update Delay too small. StatusPage maximum metric update frequency is 1 second. "
+            logging.warning("Update Delay too small. StatusPage maximum metric update frequency is 1 second. "
                          "The update delay value has been changed to 1000.")
 
         if len(metrics) == 0:
@@ -51,11 +51,11 @@ def main(config_file_path):
                     logging.info("Metric: \"{}\" value updated to: {}".format(metric["description"], metric_value))
 
             except requests.exceptions.HTTPError as err:
-                logging.warn("Failed to update the metric: \"{}\". HTTP Error. Response: {}".format(metric["description"], err.response))
+                logging.warning("Failed to update the metric: \"{}\". HTTP Error. Response: {}".format(metric["description"], err.response))
             except KeyError as err:
-                logging.warn("Failed to update a metric because of a missing key in the conf file. Error: {}".format(err))
+                logging.warning("Failed to update a metric because of a missing key in the conf file. Error: {}".format(err))
             except Exception as err:
-               logging.warn("Failed to update a metric. Error: {}".format(err))
+               logging.warning("Failed to update a metric. Error: {}".format(err))
 
             logging.debug("All metrics updated. Next update in: {}ms".format(update_delay))
             time.sleep(update_delay / 1000.0)
