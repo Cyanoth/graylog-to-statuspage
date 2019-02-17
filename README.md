@@ -1,7 +1,9 @@
 # Graylog to Statuspage System Metrics
 
-A python script which periodically gets the value of a metric from a Graylog instance and posts the value to a system metric on statuspage.io 
-Include are files to run this script continuously in a docker container. 
+A python script which periodically gets the value of a metric from a Graylog instance and posts the value to a system metric on statuspage.io.
+Includes files to enable this script to run continuously in a docker container. 
+
+This was mainly written for my own use, please feel free to fork and use it.
 
 ## Getting Started
 
@@ -28,7 +30,7 @@ After completing the stages in Getting Started, edit the file graylog_to_statusp
 statuspageAPIHost: "https://api.statuspage.io"
 statuspageAPIKey: "abcdefgh1234ijlmn02324"
 graylogAPIHost: "https://graylog.coolhost.com"
-graylogAPIToken: "rfjdsjdqwe432fnk"
+graylogAPIToken: "zmd2k312kso1231wdsa"
 ```
 
 Add a section 'metrics' and for each metric you'd like send from graylog to statuspage, add the following block:
@@ -76,11 +78,11 @@ docker build -t graylog_to_statuspage .
 docker run graylog_to_statuspage
 ```
 
-Note, that this will embedded the configuration file within the docker image. Y
+Note, that this will embedded the configuration file within the docker image.
 
-You may to use docker-compose to create a named volume and copy the configuration file to here. This helps keep the docker image generic & configuration separate:
+You may to use docker-compose to create a named volume and store the configuration there. This helps keep the docker image generic & configuration separate:
 ```
 docker-compose build
-docker-compose up
+docker-compose up -d
 ```
 Customise the Dockerfile & docker-compose file to meet your deployment requirements.
