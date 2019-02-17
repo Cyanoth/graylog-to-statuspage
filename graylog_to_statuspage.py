@@ -82,7 +82,7 @@ def get_graylog_metric_value(gl_apihost, gl_apitoken, gl_dashboardid, gl_widget_
     res = requests.get(request_url, auth=(gl_apitoken, 'token'))
     res.raise_for_status()  # If not 200, raise HTTPError Exception
     metric_value = res.json()["result"]
-    logging.debug("Result: {}".format(request_url, metric_value))
+    logging.debug("Result: {} = {}".format(request_url, metric_value))
     return metric_value
 
 
