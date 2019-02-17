@@ -2,7 +2,7 @@ version: '2'
 services:
   graylog_to_statuspage:
     container_name: graylog_to_statuspage
-    image: .
+    build: .
     volumes:
         - config:/var/opt/graylog_to_statuspage/:rw    
 volumes:
